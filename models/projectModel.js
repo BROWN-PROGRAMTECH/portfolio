@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 
 const projectSchema = mongoose.Schema({
     title:{
@@ -15,18 +16,21 @@ const projectSchema = mongoose.Schema({
         require : [true, 'please enter an image project']
     },
 
-    demoLink : {
+    demo_link : {
         type : String,
         require : [true, 'please enter a demo link']
     },
 
-    githubLink : {
+    github_link : {
         type : String,
         require : [true, 'please enter a github link']
     },
 },
 {
-        timestamp:true
+    timestamp:true
 }
 
 )
+
+const Project = mongoose.model('Project', projectSchema)
+module.exports = Project

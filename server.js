@@ -9,8 +9,13 @@ const cors = require('cors')
 const app = express()
 
 const userRoute = require("./routes/userRoute");
+const projectRoute = require("./routes/projectRoute");
+serviceRoute = require('./routes/serviceRoute')
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser')
+
+//const path = require("path");
+
 //middleware
 app.use(express.json()) //handle json data in the app
 app.use(express.urlencoded({extend:false})) //handle data come from url
@@ -18,8 +23,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
 
+app.use(express.static(__dirname));
+
 //Routes Middleware
 app.use("/api/users", userRoute)
+app.use('/api/project', projectRoute)
+app.use('/api/service', serviceRoute)
 
 //routes
 app.get('/', (req, res) => {

@@ -1,16 +1,15 @@
 
 const asyncHandler = require('express-async-handler');
 const Project = require('../models/projectModel');
-const cloudinary = require('../utils/cloudinary');
-//const {fileSizeFormat} = require('../utils/fileUpload');
+const cloudinary = require('../utils/cloudinary').v2;
+const {fileSizeFormatter} = require('../utils/fileUpload');
 
 //create a new project
 const createProject = asyncHandler(async(req, res) => {
     const {title, description, image, demo_link, github_link} = req.body;
-
-    if(!title || !description || !image || !github_link || !demo_link){
+    if(!title || !description ||  !demo_link || !github_link ){
         res.status(400)
-            throw new Error('All the fields are required!')
+        throw new Error('All the fields are required!')
     }
 
     //Handle image upload
@@ -33,9 +32,9 @@ const createProject = asyncHandler(async(req, res) => {
         }
 
         fileData = {
-            fileName: req.file.originalName,
+            fileName: req.file.originalname,
             filePath: uploadedFile.secure_url,
-            fileType:req.file.mimetype,
+            fileType: req.file.mimetype,
             fileSize: fileSizeFormatter(req.file.size, 2)
         };
     }
@@ -128,7 +127,7 @@ const updateProject = asyncHandler(async (req, res) => {
     }
 
     fileUpload = {
-        fileName: fileData.originalName,
+        fileName: fileData.originalname,
         filePath:fileUpload.secure_url,
         fileType:req.file.mimetype,
         fileSize:fileSizeFormatter(req.file.size, 2)
