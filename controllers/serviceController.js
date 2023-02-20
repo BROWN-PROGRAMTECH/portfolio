@@ -5,8 +5,6 @@ const Service = require('../models/serviceModel')
 const addService = asyncHandler(async(req, res) => {
     const {title, description, image} = req.body;
 
- 
-
     const service = await Service.create({
         title,
         description,

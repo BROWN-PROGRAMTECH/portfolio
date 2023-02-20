@@ -7,7 +7,7 @@ const {
         updateProject, 
         deleteProject } = require('../controllers/projectController')
 const protect = require('../middlewares/authMiddleware')
-const { upload } = require("../utils/fileUpload");
+const  upload  = require("../utils/fileUpload");
 
 
 router.post('/newProject', protect, upload.single('image'), createProject)

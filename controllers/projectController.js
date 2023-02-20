@@ -1,60 +1,45 @@
 
 const asyncHandler = require('express-async-handler');
 const Project = require('../models/projectModel');
-const cloudinary = require('../utils/cloudinary').v2;
-const {fileSizeFormatter} = require('../utils/fileUpload');
+const cloudinary = require('../utils/cloudinary');
+//const {fileSizeFormatter} = require('../utils/fileUpload');
 
 //create a new project
 const createProject = asyncHandler(async(req, res) => {
-    const {title, description, image, demo_link, github_link} = req.body;
-    if(!title || !description ||  !demo_link || !github_link ){
-        res.status(400)
-        throw new Error('All the fields are required!')
-    }
-
-    //Handle image upload
-
-    let fileData = {};
-
-    if(req.file){
-        //save the image to cloudinary
-        let uploadedFile 
+    const {title, description,  demo_link, github_link, image} = req.body;
+    //const file = req.files.image
+    
 
         try {
-           uploadedFile = await cloudinary.uploader.upload(req.file.path, {
-                folder:"project images",
-                resource_type: 'image'
-            })
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: "Project Image",
+                resource_type: "image",
+              });
+            const newProject = await Project.create({
+                title,
+                description,
+                demo_link,
+                github_link,
+                image: req.secure_url, 
+                cloudinary_id: result.public_id,
+            });
+            res.status(201).json(newProject)
         }
         catch (err){
             res.status(500);
-            throw new Error('Image could not be uploaded');
+            throw new Error('Invalid data');
         }
-
-        fileData = {
-            fileName: req.file.originalname,
-            filePath: uploadedFile.secure_url,
-            fileType: req.file.mimetype,
-            fileSize: fileSizeFormatter(req.file.size, 2)
-        };
-    }
-
-    //create new product
-    const newProject = await Project.create({
-        user: req.user.id,
-        title,
-        description,
-        image: fileData,
-        demo_link,
-        github_link
-    });
-    res.status(201).json(newProject)
 });
 
 //Get all projects
 const allProjects = asyncHandler(async(req, res) => {
-    const projects = await Project.find({user: req.user.id}).sort("-createdAt");
-    res.status(201).json(projects)
+    const projects = await Project.find().sort("-createdAt");
+    if(projects.length ===0){
+        res.status(404);
+        throw new Error('No projects found');
+    }else{
+        res.status(201).json(projects)
+    }
 });
 
 //Find one project
@@ -126,12 +111,7 @@ const updateProject = asyncHandler(async (req, res) => {
         throw new Error('image not uploaded')
     }
 
-    fileUpload = {
-        fileName: fileData.originalname,
-        filePath:fileUpload.secure_url,
-        fileType:req.file.mimetype,
-        fileSize:fileSizeFormatter(req.file.size, 2)
-    }
+  
 
     const updateProject = await project.fineByIdAndUpdate(
          {_id : id},

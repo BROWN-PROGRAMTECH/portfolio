@@ -4,13 +4,16 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+//const fileupload = require('express-fileupload'); 
 
 
 const app = express()
 
 const userRoute = require("./routes/userRoute");
 const projectRoute = require("./routes/projectRoute");
-serviceRoute = require('./routes/serviceRoute')
+const serviceRoute = require('./routes/serviceRoute');
+const experienceRoute = require('./routes/experienceRoute');
+const testimonialsRoute = require('./routes/testimonialsRoute')
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser')
 
@@ -25,10 +28,13 @@ app.use(cookieParser())
 
 app.use(express.static(__dirname));
 
+//app.use(fileupload({useTempFiles: true}))
 //Routes Middleware
 app.use("/api/users", userRoute)
 app.use('/api/project', projectRoute)
-app.use('/api/service', serviceRoute)
+app.use('/api/service', serviceRoute) 
+app.use('/api/experience', experienceRoute)
+app.use('/api/testimony', testimonialsRoute)
 
 //routes
 app.get('/', (req, res) => {

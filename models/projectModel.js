@@ -3,31 +3,36 @@ const mongoose = require('mongoose');
 const projectSchema = mongoose.Schema({
     title:{
         type : String, 
-        require : [true, 'please enter a title']
+        require : [true, 'please add a title']
     },
 
-    description : {
-        type : String,
-        require : [true, 'please enter a description']
-    },
+    description: {
+        type: String,
+        required: [true, "Please add a description"],
+        trim: true,
+      },
 
     image : {
-        type : String,
-        require : [true, 'please enter an image project']
+        
+        type : Object,
+        default: {}
     },
+    cloudinary_id:{
+        type: String
+    }, 
 
     demo_link : {
         type : String,
-        require : [true, 'please enter a demo link']
+        require : [true, 'please add a demo link'] 
     },
 
     github_link : {
         type : String,
-        require : [true, 'please enter a github link']
+        require : [true, 'please add a github link']
     },
 },
 {
-    timestamp:true
+    timestamp:true 
 }
 
 )
