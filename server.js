@@ -54,4 +54,4 @@ mongoose
             PORT,
             () => console.log(`mongo server is running on port ${PORT} good job!`)  
         )})
-        .catch((err) => console.log(err))
+        .catch((err) => console.log(err)) 

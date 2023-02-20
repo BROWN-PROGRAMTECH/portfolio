@@ -6,15 +6,15 @@ const cloudinary = require('../utils/cloudinary');
 
 //create a new project
 const createProject = asyncHandler(async(req, res) => {
-    const {title, description,  demo_link, github_link, image} = req.body;
+    const {title, description,  demo_link, github_link} = req.body;
     //const file = req.files.image
-    
 
         try {
             const result = await cloudinary.uploader.upload(req.file.path, {
                 folder: "Project Image",
                 resource_type: "image",
               });
+              console.log(result)
             const newProject = await Project.create({
                 title,
                 description,
