@@ -3,11 +3,10 @@ const mongoose = require('mongoose')
 const serviceSchema = mongoose.Schema({
     title : {
         type: String,
-        required: [true, 'please enter the title']
+        unique:[true, 'title is already exists']
     },
     description: {
         type: String,
-        required: [true, 'please enter the description']
     },
     image : {
         type: String,

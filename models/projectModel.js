@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const projectSchema = mongoose.Schema({
     title:{
         type : String, 
-        require : [true, 'please add a title']
+        require : [true, 'please add a title'],
+        unique: [true, 'title is already exists']
     },
 
     description: {

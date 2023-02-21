@@ -24,14 +24,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //password length validation
   if (password.length < 8) {
-    res.status(400);
+    res.status(411);
     throw new Error("please password is at least 8 characters!");
   }
 
   //existing email verification
   const existingEmail = await User.findOne({ email });
   if (existingEmail) {
-    res.status(404);
+    res.status(409);
     throw new Error("there is already an existing email!");
   }
 
@@ -67,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
       token,
     });
   } else {
-    res.status(400);
+    res.status(500);
     throw new Error("invalid user data");
   }
 });
@@ -88,7 +88,7 @@ const loginUser = asyncHandler(async (req, res) => {
   
 
   if (!user) {
-    res.status(400);
+    res.status(404);
     throw new Error("user not found,please signup!");
   }
   
@@ -112,7 +112,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (user && passwordIsCorrected) {
     const { _id, name, email, phone, bio } = user;
-    res.status(200).json({
+    res.status(201).json({
       _id,
       name,
       email,
@@ -145,7 +145,7 @@ const getUserData = asyncHandler(async (req, res) => {
 
   if (user) {
     const { _id, name, email, phone, bio, photo } = user;
-    res.status(200).json({
+    res.status(202).json({
       _id,
       name,
       email,
@@ -197,7 +197,7 @@ const updateUser = asyncHandler(async(req, res) => {
     //save the new user info
     const updatedUser = await user.save();
 
-    res.status(200).json({
+    res.status(202).json({
       _id: updatedUser._id,
       email: updatedUser.email,
       name: updatedUser.name,
@@ -222,7 +222,7 @@ const changePassword = asyncHandler(async(req, res) => {
 
 
   if(!user){
-    res.status(400)
+    res.status(404)
     throw new Error('user not found') 
   }
 
@@ -240,7 +240,7 @@ const changePassword = asyncHandler(async(req, res) => {
     res.status(200).send('password updated!')
 
   } else{ 
-    res.status(404)
+    res.status(500)
     throw new Error('old password is incorrect!')
   } 
 })
@@ -253,7 +253,7 @@ const forgotPassword = asyncHandler(async(req, res) => {
   const user = await User.findOne({email})
 
   if(!user){
-    res.status(400)
+    res.status(404)
     throw new Error('user not found')
   }
 
@@ -340,7 +340,7 @@ const resetPassword = asyncHandler(async (req, res) =>{
   const user = await User.findOne({_id: userToken.userId})
   user.password = password
   await user.save()
-  res.status(200).send('password updated successfully, please login')
+  res.status(202).send('password updated successfully, please login')
 
 })
 
