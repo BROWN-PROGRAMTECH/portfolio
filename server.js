@@ -1,5 +1,5 @@
 
-const dotenv = require('dotenv').config({path: "config.env" })
+const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -53,7 +53,7 @@ mongoose.set('strictQuery', true)
 //connect to mongoose server and start server
 
 mongoose  
-    .connect(process.env.MONGO_URI)
+    .connect({path: "process.env.MONGO_URI" })
     .then(() => { 
         app.listen(  
             PORT,
