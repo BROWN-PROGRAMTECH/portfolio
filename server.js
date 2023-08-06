@@ -53,7 +53,7 @@ mongoose.set('strictQuery', true)
 //connect to mongoose server and start server
 
 mongoose  
-    .connect({path: "process.env.MONGO_URI" })
+    .connect(process.env.MONGO_URI)
     .then(() => { 
         app.listen(  
             PORT,
