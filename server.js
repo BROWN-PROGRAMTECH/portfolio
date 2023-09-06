@@ -54,8 +54,8 @@ mongoose.set('strictQuery', true)
 //connect to mongoose server and start server
 
 mongoose  
-    .connect(process.env?.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => { 
+    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {  
         app.listen(  
             PORT,
             () => console.log(`mongo server is running on port ${PORT} good job!`)  
