@@ -18,8 +18,8 @@ const testimonialsRoute = require('./routes/testimonialsRoute')
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser')
 
-//const path = require("path");
-
+const path = require("path");
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 //middleware
 app.use(express.json()) //handle json data in the app
 app.use(express.urlencoded({extended:true})) //handle data come from url
@@ -52,7 +52,7 @@ app.use(errorHandler)
 const PORT = process.env.PORT||5000;
 mongoose.set('strictQuery', true)
 //connect to mongoose server and start server
-
+// console.log(typeof(process.env.MONGO_URI), process.env.MONGO_URI)
 mongoose  
     .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {  
