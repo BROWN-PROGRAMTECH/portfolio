@@ -21,7 +21,7 @@ const cookieParser = require('cookie-parser')
 
 //middleware
 app.use(express.json()) //handle json data in the app
-app.use(express.urlencoded({extend:false})) //handle data come from url
+app.use(express.urlencoded({extend:true})) //handle data come from url
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
