@@ -1,5 +1,6 @@
 
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv')
+dotenv.config()
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -7,7 +8,7 @@ const cors = require('cors')
 //const fileupload = require('express-fileupload'); 
 
 
-const app = express()
+const app = express() 
 
 const userRoute = require("./routes/userRoute");
 const projectRoute = require("./routes/projectRoute");
@@ -17,11 +18,11 @@ const testimonialsRoute = require('./routes/testimonialsRoute')
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser')
 
-//const path = require("path");
-
+const path = require("path");
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 //middleware
 app.use(express.json()) //handle json data in the app
-app.use(express.urlencoded({extend:false})) //handle data come from url
+app.use(express.urlencoded({extended:true})) //handle data come from url
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
@@ -58,12 +59,12 @@ app.use(errorHandler)
 const PORT = process.env.PORT||5000;
 mongoose.set('strictQuery', true)
 //connect to mongoose server and start server
-
+// console.log(typeof(process.env.MONGO_URI), process.env.MONGO_URI)
 mongoose  
     .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => { 
+    .then(() => {  
         app.listen(  
             PORT,
             () => console.log(`mongo server is running on port ${PORT} good job!`)  
         )})
-        .catch((err) => console.log(err)) 
+        .catch((err) => console.log(err))  
