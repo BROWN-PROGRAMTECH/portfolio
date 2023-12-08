@@ -31,7 +31,6 @@ app.use(cookieParser())
 //     origin: 'http://localhost:3000',
 //     credentials: true
 // }))
-const cors = require('Cors');
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
