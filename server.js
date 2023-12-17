@@ -7,10 +7,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors');
 //const fileupload = require('express-fileupload'); 
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-}));
-
 const app = express() 
 
 const userRoute = require("./routes/userRoute");
@@ -39,7 +35,10 @@ app.use(cookieParser())
 //     credentials:true,            //access-control-allow-credentials:true
 //     optionSuccessStatus:200
 // }
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 app.use(express.static(__dirname));
 
