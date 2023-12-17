@@ -38,6 +38,9 @@ app.use(cookieParser())
 // app.use(cors(corsOptions));
 app.use(cors({
   origin: 'http://localhost:3000',
+   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 app.use(express.static(__dirname));
