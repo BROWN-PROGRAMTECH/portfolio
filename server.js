@@ -4,9 +4,8 @@ dotenv.config()
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const cors = require('cors')
+const cors = require('cors');
 //const fileupload = require('express-fileupload'); 
-
 
 const app = express() 
 
@@ -31,19 +30,25 @@ app.use(cookieParser())
 //     origin: 'http://localhost:3000',
 //     credentials: true
 // }))
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+// const corsOptions ={
+//     origin:'http://localhost:3000', 
+//     credentials:true,            //access-control-allow-credentials:true
+//     optionSuccessStatus:200
+// }
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'http://localhost:3000',
+   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 app.use(express.static(__dirname));
 
 //app.use(fileupload({useTempFiles: true}))
 //Routes Middleware
 app.use("/api/users", userRoute)
-app.use('/api/project', projectRoute)
+// app.use('/api/project', projectRoute)
 app.use('/api/service', serviceRoute) 
 app.use('/api/experience', experienceRoute)
 app.use('/api/testimony', testimonialsRoute)
