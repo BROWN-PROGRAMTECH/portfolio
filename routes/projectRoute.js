@@ -6,14 +6,14 @@ const {
         oneProject, 
         updateProject, 
         deleteProject } = require('../controllers/projectController')
-const protect = require('../middlewares/authMiddleware')
+// const protect = require('../middlewares/authMiddleware')
 const  upload  = require("../utils/fileUpload");
 
-
-router.post('/newProject', protect, upload.single('image'), createProject)
-router.get('/projects', protect, allProjects)
-router.get('/project/:id', protect, oneProject)
-router.patch('/project/:id', protect, upload.single('image'), updateProject)
-router.delete('/project/:id', protect, deleteProject)
+// router.post('/newProject', protect, upload.single('image'), createProject)
+router.post('/newProject', upload.single('image'), createProject)
+router.get('/projects', allProjects)
+router.get('/project/:id', oneProject)
+router.patch('/project/:id', upload.single('image'), updateProject)
+router.delete('/project/:id', deleteProject)
 
 module.exports = router
