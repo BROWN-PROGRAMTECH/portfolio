@@ -48,7 +48,7 @@ app.use(express.static(__dirname));
 //app.use(fileupload({useTempFiles: true}))
 //Routes Middleware
 app.use("/api/users", userRoute)
-// app.use('/api/project', projectRoute)
+app.use('/api/project', projectRoute)
 app.use('/api/service', serviceRoute) 
 app.use('/api/experience', experienceRoute)
 app.use('/api/testimony', testimonialsRoute)
