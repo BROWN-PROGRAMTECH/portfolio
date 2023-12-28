@@ -31,7 +31,7 @@ const services = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("There is no service available!");
   }
-  res.status(200).json({ services });
+  res.status(200).json( services );
 });
 
 //fetch a particular services in database by its id

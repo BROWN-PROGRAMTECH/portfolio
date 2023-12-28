@@ -29,7 +29,7 @@ const addExperience = asyncHandler(async (req, res) => {
 
 const experiences = asyncHandler(async (req, res) => {
   const experience = await Experience.find().sort("-createdAt");
-  res.status(201).json({ experience });
+  res.status(201).json( experience );
 });
 
 //get a specific experience
